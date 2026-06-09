@@ -1,0 +1,54 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: coletas-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: coletas
+      MYSQL_USER: coletas
+      MYSQL_PASSWORD: coletas123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: coletas-backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__MySql: "Server=mysql;Port=3306;Database=coletas;User=coletas;Password=coletas123;"
+      Jwt__Issuer: "Coletas.Api"
+      Jwt__Audience: "Coletas.Frontend"
+      Jwt__Key: "chave-super-secreta-para-desenvolvimento-trocar-em-producao-1234567890"
+      Cors__Origens__0: "http://localhost:3000"
+    ports:
+      - "5080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: "http://localhost:5080"
+    container_name: coletas-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  mysql-data:
