@@ -14,11 +14,23 @@ export function ProtectedPage({ children }: { children: ReactNode }) {
   }, [carregando, usuario, router]);
 
   if (carregando) {
-    return <p className="text-slate-500">Carregando...</p>;
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center">
+        <div className="app-card px-6 py-4 text-sm text-slate-600 shadow-lg">
+          Carregando...
+        </div>
+      </div>
+    );
   }
 
   if (!usuario) {
-    return <p className="text-slate-500">Redirecionando para o login...</p>;
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center">
+        <div className="app-card px-6 py-4 text-sm text-slate-600 shadow-lg">
+          Redirecionando para o login...
+        </div>
+      </div>
+    );
   }
 
   return <>{children}</>;

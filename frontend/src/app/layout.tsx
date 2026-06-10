@@ -1,7 +1,20 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
 import { Header } from "@/components/Header";
+
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  display: "swap",
+});
+
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Gestão de Coletas",
@@ -13,10 +26,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
-      <body className="min-h-screen bg-slate-100 text-slate-900">
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
         <AuthProvider>
           <Header />
-          <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
+          <main className="app-shell py-6 sm:py-8">{children}</main>
         </AuthProvider>
       </body>
     </html>

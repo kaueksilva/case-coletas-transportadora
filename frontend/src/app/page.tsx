@@ -72,30 +72,34 @@ function Acompanhamento() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 rounded-3xl border border-white/70 bg-white/70 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Acompanhamento de Coletas</h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
+            Operação
+          </p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">
+            Acompanhamento de Coletas
+          </h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
             Filtre por situação, cliente e período. Coletas de prioridade alta ficam em destaque.
           </p>
         </div>
-        <Link
-          href="/coletas/nova"
-          className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-        >
+        <Link href="/coletas/nova" className="app-button-primary">
           + Nova coleta
         </Link>
       </div>
 
-      {/* Filtros */}
-      <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="app-panel">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Situação</label>
+            <label className="app-label">Situação</label>
             <select
               value={status}
-              onChange={(e) => { setStatus(e.target.value); setPagina(1); }}
-              className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm"
+              onChange={(e) => {
+                setStatus(e.target.value);
+                setPagina(1);
+              }}
+              className="app-input"
             >
               <option value="">Todas</option>
               <option value={StatusColeta.Aberta}>Aberta</option>
@@ -105,20 +109,26 @@ function Acompanhamento() {
             </select>
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Cliente</label>
+            <label className="app-label">Cliente</label>
             <input
               value={cliente}
-              onChange={(e) => { setCliente(e.target.value); setPagina(1); }}
+              onChange={(e) => {
+                setCliente(e.target.value);
+                setPagina(1);
+              }}
               placeholder="Nome do cliente"
-              className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm"
+              className="app-input"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Prioridade</label>
+            <label className="app-label">Prioridade</label>
             <select
               value={prioridade}
-              onChange={(e) => { setPrioridade(e.target.value); setPagina(1); }}
-              className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm"
+              onChange={(e) => {
+                setPrioridade(e.target.value);
+                setPagina(1);
+              }}
+              className="app-input"
             >
               <option value="">Todas</option>
               <option value={Prioridade.Baixa}>Baixa</option>
@@ -127,94 +137,115 @@ function Acompanhamento() {
             </select>
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">De</label>
+            <label className="app-label">De</label>
             <input
               type="date"
               value={dataInicial}
-              onChange={(e) => { setDataInicial(e.target.value); setPagina(1); }}
-              className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm"
+              onChange={(e) => {
+                setDataInicial(e.target.value);
+                setPagina(1);
+              }}
+              className="app-input"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Até</label>
+            <label className="app-label">Até</label>
             <input
               type="date"
               value={dataFinal}
-              onChange={(e) => { setDataFinal(e.target.value); setPagina(1); }}
-              className="w-full rounded border border-slate-300 px-2 py-1.5 text-sm"
+              onChange={(e) => {
+                setDataFinal(e.target.value);
+                setPagina(1);
+              }}
+              className="app-input"
             />
           </div>
         </div>
-        <div className="mt-3 flex justify-end">
-          <button
-            onClick={limparFiltros}
-            className="rounded border border-slate-300 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100"
-          >
+        <div className="mt-5 flex justify-end">
+          <button onClick={limparFiltros} className="app-button-secondary">
             Limpar filtros
           </button>
         </div>
       </div>
 
-      {erro && <p className="rounded bg-red-50 px-3 py-2 text-sm text-red-700">{erro}</p>}
+      {erro && <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{erro}</p>}
 
-      {/* Tabela */}
-      <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
-        <table className="min-w-full divide-y divide-slate-200 text-sm">
-          <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
+      <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur">
+        <table className="min-w-full divide-y divide-slate-100 text-sm">
+          <thead className="bg-slate-50/80 text-left text-xs uppercase tracking-[0.18em] text-slate-500">
             <tr>
-              <th className="px-4 py-3">Número</th>
-              <th className="px-4 py-3">Cliente</th>
-              <th className="px-4 py-3">Data coleta</th>
-              <th className="px-4 py-3">Prioridade</th>
-              <th className="px-4 py-3">Situação</th>
-              <th className="px-4 py-3">Motorista/Veículo</th>
-              <th className="px-4 py-3"></th>
+              <th className="px-5 py-4">Número</th>
+              <th className="px-5 py-4">Cliente</th>
+              <th className="px-5 py-4">Data coleta</th>
+              <th className="px-5 py-4">Prioridade</th>
+              <th className="px-5 py-4">Situação</th>
+              <th className="px-5 py-4">Motorista/Veículo</th>
+              <th className="px-5 py-4"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 bg-white/60">
             {carregando ? (
-              <tr><td colSpan={7} className="px-4 py-6 text-center text-slate-400">Carregando...</td></tr>
+              <tr>
+                <td colSpan={7} className="px-5 py-10 text-center text-slate-400">
+                  Carregando...
+                </td>
+              </tr>
             ) : dados && dados.itens.length > 0 ? (
               dados.itens.map((c) => (
-                <tr key={c.id} className={c.prioridadeAlta ? "bg-red-50/60" : ""}>
-                  <td className="px-4 py-3 font-mono text-xs">{c.numero}</td>
-                  <td className="px-4 py-3 font-medium">{c.cliente}</td>
-                  <td className="px-4 py-3 text-slate-600">{formatarData(c.dataColeta)}</td>
-                  <td className="px-4 py-3"><PrioridadeBadge prioridade={c.prioridade} descricao={c.prioridadeDescricao} /></td>
-                  <td className="px-4 py-3"><StatusBadge status={c.status} descricao={c.statusDescricao} /></td>
-                  <td className="px-4 py-3 text-slate-600">
+                <tr
+                  key={c.id}
+                  className={c.prioridadeAlta ? "bg-rose-50/60" : "transition hover:bg-slate-50/80"}
+                >
+                  <td className="px-5 py-4 font-mono text-xs font-semibold text-slate-700">{c.numero}</td>
+                  <td className="px-5 py-4 font-medium text-slate-900">{c.cliente}</td>
+                  <td className="px-5 py-4 text-slate-600">{formatarData(c.dataColeta)}</td>
+                  <td className="px-5 py-4">
+                    <PrioridadeBadge prioridade={c.prioridade} descricao={c.prioridadeDescricao} />
+                  </td>
+                  <td className="px-5 py-4">
+                    <StatusBadge status={c.status} descricao={c.statusDescricao} />
+                  </td>
+                  <td className="px-5 py-4 text-slate-600">
                     {c.motoristaNome ? `${c.motoristaNome} / ${c.veiculoPlaca}` : <span className="text-slate-400">—</span>}
                   </td>
-                  <td className="px-4 py-3 text-right">
-                    <Link href={`/coletas/${c.id}`} className="text-blue-600 hover:underline">Detalhes</Link>
+                  <td className="px-5 py-4 text-right">
+                    <Link
+                      href={`/coletas/${c.id}`}
+                      className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-200"
+                    >
+                      Detalhes
+                    </Link>
                   </td>
                 </tr>
               ))
             ) : (
-              <tr><td colSpan={7} className="px-4 py-6 text-center text-slate-400">Nenhuma coleta encontrada.</td></tr>
+              <tr>
+                <td colSpan={7} className="px-5 py-10 text-center text-slate-400">
+                  Nenhuma coleta encontrada.
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
       </div>
 
-      {/* Paginação */}
       {dados && dados.totalPaginas > 0 && (
-        <div className="flex items-center justify-between text-sm text-slate-600">
-          <span>
+        <div className="flex flex-col gap-4 rounded-3xl border border-white/70 bg-white/70 px-5 py-4 text-sm text-slate-600 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+          <span className="font-medium text-slate-700">
             {dados.totalItens} coleta(s) — página {dados.pagina} de {dados.totalPaginas}
           </span>
           <div className="flex gap-2">
             <button
               disabled={pagina <= 1}
               onClick={() => setPagina((p) => p - 1)}
-              className="rounded border border-slate-300 px-3 py-1 disabled:opacity-50"
+              className="app-button-secondary px-4 py-2"
             >
               Anterior
             </button>
             <button
               disabled={pagina >= dados.totalPaginas}
               onClick={() => setPagina((p) => p + 1)}
-              className="rounded border border-slate-300 px-3 py-1 disabled:opacity-50"
+              className="app-button-secondary px-4 py-2"
             >
               Próxima
             </button>

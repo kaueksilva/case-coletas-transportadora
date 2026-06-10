@@ -57,46 +57,83 @@ function NovaColeta() {
     }
   }
 
-  const inputClass = "w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none";
-  const labelClass = "mb-1 block text-sm font-medium text-slate-700";
-
   return (
-    <div className="mx-auto max-w-2xl">
-      <h1 className="mb-1 text-2xl font-bold text-slate-800">Nova solicitação de coleta</h1>
-      <p className="mb-6 text-sm text-slate-500">
-        Informe os dados do remetente, destinatário, data e prioridade.
-      </p>
+    <div className="mx-auto max-w-4xl">
+      <div className="mb-6 rounded-3xl border border-white/70 bg-white/70 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur">
+        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">Operação</p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">
+          Nova solicitação de coleta
+        </h1>
+        <p className="mt-3 text-sm leading-6 text-slate-600">
+          Informe os dados do remetente, destinatário, data e prioridade.
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+      <form onSubmit={handleSubmit} className="space-y-6 app-panel">
         <div>
-          <label className={labelClass}>Cliente</label>
-          <input required value={form.cliente} onChange={(e) => atualizar("cliente", e.target.value)} className={inputClass} />
+          <label className="app-label">Cliente</label>
+          <input
+            required
+            value={form.cliente}
+            onChange={(e) => atualizar("cliente", e.target.value)}
+            className="app-input"
+          />
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div>
-            <label className={labelClass}>Remetente</label>
-            <input required value={form.remetenteNome} onChange={(e) => atualizar("remetenteNome", e.target.value)} className={inputClass} />
+            <label className="app-label">Remetente</label>
+            <input
+              required
+              value={form.remetenteNome}
+              onChange={(e) => atualizar("remetenteNome", e.target.value)}
+              className="app-input"
+            />
           </div>
           <div>
-            <label className={labelClass}>Endereço do remetente</label>
-            <input required value={form.remetenteEndereco} onChange={(e) => atualizar("remetenteEndereco", e.target.value)} className={inputClass} />
+            <label className="app-label">Endereço do remetente</label>
+            <input
+              required
+              value={form.remetenteEndereco}
+              onChange={(e) => atualizar("remetenteEndereco", e.target.value)}
+              className="app-input"
+            />
           </div>
           <div>
-            <label className={labelClass}>Destinatário</label>
-            <input required value={form.destinatarioNome} onChange={(e) => atualizar("destinatarioNome", e.target.value)} className={inputClass} />
+            <label className="app-label">Destinatário</label>
+            <input
+              required
+              value={form.destinatarioNome}
+              onChange={(e) => atualizar("destinatarioNome", e.target.value)}
+              className="app-input"
+            />
           </div>
           <div>
-            <label className={labelClass}>Endereço do destinatário</label>
-            <input required value={form.destinatarioEndereco} onChange={(e) => atualizar("destinatarioEndereco", e.target.value)} className={inputClass} />
+            <label className="app-label">Endereço do destinatário</label>
+            <input
+              required
+              value={form.destinatarioEndereco}
+              onChange={(e) => atualizar("destinatarioEndereco", e.target.value)}
+              className="app-input"
+            />
           </div>
           <div>
-            <label className={labelClass}>Data/hora da coleta</label>
-            <input required type="datetime-local" value={form.dataColeta} onChange={(e) => atualizar("dataColeta", e.target.value)} className={inputClass} />
+            <label className="app-label">Data/hora da coleta</label>
+            <input
+              required
+              type="datetime-local"
+              value={form.dataColeta}
+              onChange={(e) => atualizar("dataColeta", e.target.value)}
+              className="app-input"
+            />
           </div>
           <div>
-            <label className={labelClass}>Prioridade</label>
-            <select value={form.prioridade} onChange={(e) => atualizar("prioridade", e.target.value)} className={inputClass}>
+            <label className="app-label">Prioridade</label>
+            <select
+              value={form.prioridade}
+              onChange={(e) => atualizar("prioridade", e.target.value)}
+              className="app-input"
+            >
               <option value={Prioridade.Baixa}>Baixa</option>
               <option value={Prioridade.Media}>Média</option>
               <option value={Prioridade.Alta}>Alta</option>
@@ -105,17 +142,22 @@ function NovaColeta() {
         </div>
 
         <div>
-          <label className={labelClass}>Observações</label>
-          <textarea value={form.observacoes} onChange={(e) => atualizar("observacoes", e.target.value)} rows={3} className={inputClass} />
+          <label className="app-label">Observações</label>
+          <textarea
+            value={form.observacoes}
+            onChange={(e) => atualizar("observacoes", e.target.value)}
+            rows={4}
+            className="app-input resize-none"
+          />
         </div>
 
-        {erro && <p className="rounded bg-red-50 px-3 py-2 text-sm text-red-700">{erro}</p>}
+        {erro && <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{erro}</p>}
 
         <div className="flex justify-end gap-2">
-          <button type="button" onClick={() => router.push("/")} className="rounded border border-slate-300 px-4 py-2 text-sm text-slate-600 hover:bg-slate-100">
+          <button type="button" onClick={() => router.push("/")} className="app-button-secondary">
             Cancelar
           </button>
-          <button type="submit" disabled={salvando} className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60">
+          <button type="submit" disabled={salvando} className="app-button-primary">
             {salvando ? "Salvando..." : "Registrar coleta"}
           </button>
         </div>

@@ -28,51 +28,82 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="mx-auto mt-10 max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
-      <h1 className="mb-1 text-2xl font-bold text-slate-800">Entrar</h1>
-      <p className="mb-6 text-sm text-slate-500">
-        Acesse o painel de gestão de coletas.
-      </p>
+    <div className="mx-auto flex min-h-[calc(100vh-11rem)] max-w-6xl items-center">
+      <div className="grid w-full gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="flex flex-col justify-center rounded-3xl border border-white/70 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 p-8 text-white shadow-[0_25px_80px_rgba(15,23,42,0.25)] sm:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-blue-200">
+            Gestão operacional
+          </p>
+          <h1 className="mt-4 max-w-xl text-4xl font-semibold tracking-tight sm:text-5xl">
+            Controle cada coleta com mais clareza e agilidade.
+          </h1>
+          <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">
+            Acompanhe status, ocorrências, motoristas e veículos em uma interface mais limpa e
+            moderna.
+          </p>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">E-mail</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700">Senha</label>
-          <input
-            type="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-            className="w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
-          />
+          <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Acesso rápido</p>
+              <p className="mt-2 text-sm text-slate-100">Login otimizado para operação diária.</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Rastreabilidade</p>
+              <p className="mt-2 text-sm text-slate-100">Histórico e status em um único fluxo.</p>
+            </div>
+          </div>
         </div>
 
-        {erro && (
-          <p className="rounded bg-red-50 px-3 py-2 text-sm text-red-700">{erro}</p>
-        )}
+        <div className="app-card-solid p-8 shadow-[0_25px_80px_rgba(15,23,42,0.12)] sm:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-600">
+            Entrar
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
+            Acesse o painel
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-slate-600">
+            Use suas credenciais para acessar o acompanhamento das coletas.
+          </p>
 
-        <button
-          type="submit"
-          disabled={carregando}
-          className="w-full rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 disabled:opacity-60"
-        >
-          {carregando ? "Entrando..." : "Entrar"}
-        </button>
-      </form>
+          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+            <div>
+              <label className="app-label">E-mail</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="app-input"
+              />
+            </div>
+            <div>
+              <label className="app-label">Senha</label>
+              <input
+                type="password"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                required
+                className="app-input"
+              />
+            </div>
 
-      <div className="mt-6 rounded bg-slate-50 p-3 text-xs text-slate-500">
-        <p className="font-medium text-slate-600">Usuários de teste (seed):</p>
-        <p>admin@coletas.com / Admin@123</p>
-        <p>operador@coletas.com / Operador@123</p>
+            {erro && (
+              <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {erro}
+              </p>
+            )}
+
+            <button type="submit" disabled={carregando} className="app-button-primary w-full">
+              {carregando ? "Entrando..." : "Entrar"}
+            </button>
+          </form>
+
+          <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+            <p className="font-semibold text-slate-700">Usuários de teste (seed)</p>
+            <p className="mt-2">admin@coletas.com / Admin@123</p>
+            <p>operador@coletas.com / Operador@123</p>
+          </div>
+        </div>
       </div>
     </div>
   );
